@@ -1,9 +1,11 @@
 import './App.css';
 
-function App() {
+function App(props) {
   return (
     <div className="App">
-      <h1>Henry Dogs</h1>
+        <Route exact path='/'>
+          <h1> pagina principal </h1>
+        </Route>
     </div>
   );
 }
