@@ -1,13 +1,29 @@
 import { Link } from "react-router-dom";
 
-function Card (props){
-    
-    return <div>
-        <Link to={'/dogs/'+ props.dogs.ID} >
-            <h2>{props.dogs.name}</h2>
-            <image src={props.dogs.image} alt='agregame una foto :D'/>
+function Card ({dog}){
+    if(dog.image){
+        return <div>
+        <Link  to={'/dogs/q?name='+ dog.name}>
+            <h2>{dog.name}</h2>
         </Link>
-    </div>
+            <img
+             width='10%' 
+             src={dog.image.url} 
+             alt='agregame una foto :D'
+             />
+        </div>
+    }if(dog.image_url){
+        return <div>
+        <Link  to={'/dogs/q?name='+ dog.name}>
+            <h2>{dog.name}</h2>
+        </Link>
+            <img
+             width='10%' 
+             src={dog.image_url} 
+             alt='agregame una foto :D'
+             />
+        </div>
+    }
 
 }
 export default Card

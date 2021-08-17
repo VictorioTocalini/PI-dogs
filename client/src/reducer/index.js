@@ -1,4 +1,4 @@
-import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT } from "./constantes";
+import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT, POST_DOG } from "../actions/constantes";
 
 var initialState = {
     dogs: [],
@@ -26,7 +26,11 @@ export default function reducer (state = initialState, action){
             return{
                 ...state,
                 temperament: [...action.payload]
-            }            
+            }  
+        case POST_DOG: 
+            return{
+
+            }          
         default: return state
     }
 }

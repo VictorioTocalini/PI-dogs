@@ -18,10 +18,12 @@ router.post('/dog',async function(req,res,next){
         };
         if(nDog.name && nDog.breed_group && nDog.weight_max && nDog.weight_min && nDog.height_max && nDog.height_min && nDog.temperament && nDog.image_url){
             const addDog = await Dog.create(nDog);
-            res.send(addDog)
+            res.send('dog created!')
+            console.log('Dog added to Data Base')
         }else {
             const msg= 'Some data is missing!!'
             res.send(msg)
+            console.log(msg)
         }
     }catch(err){
         next(err)   

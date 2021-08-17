@@ -13,19 +13,19 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     weight_min:{
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     weight_max: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     height_min: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     height_max:{
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     image_url:{
@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     life_span: { 
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     temperament: {
       type: DataTypes.STRING,
@@ -54,5 +54,8 @@ module.exports = (sequelize) => {
   "weight_max" : "15",
   "height_min": "10",
   "height_max": "20",
-  "years": "3"
+  "life_span": "3",
+  "breed_group": "carlos",
+  "image_url": "http://googlew",
+  "temperament":"socialbe, pelotudo"
 }*/

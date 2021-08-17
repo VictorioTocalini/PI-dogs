@@ -1,4 +1,4 @@
-import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT,POST_DOG } from "./constantes";
+import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT } from "./constantes";
 
 const LH = 'http://localhost:3001';
 
@@ -48,6 +48,17 @@ export function getTemperament(){
                 payload: json
             })
         })
+    }
+}
+export function postDog(input){
+    return function () {
+        fetch(LH + '/dog', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(input)
+        })  
     }
 }
 
