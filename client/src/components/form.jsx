@@ -1,21 +1,26 @@
-import React from 'react';
-import { useDispatch } from 'react-redux'
-import { postDog } from '../actions';
+import React,{useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+import { postDog, getTemperament } from '../actions';
 
 export default function Formulario (){
-    
     const dispatch = useDispatch();
-    const[input, setInput] = React.useState({});
+    useEffect(()=>{
+        dispatch(getTemperament())
+    },[dispatch]);
+    const obj = {      
+        "name":"",
+        "breed_group":"",
+        "weight_min":"",
+        "weight_max":"",
+        "height_min":"",
+        "height_max":"",
+        "temperament":"",
+        "image_url":"",
+        "life_span":""
+    };
+    const temperaments = useSelector((state) => state.temperament)
+    const[input, setInput] = React.useState(obj);
     const[errors, setErrors] = React.useState({});
-
-
-    function validate(value){
-        if(!/https?:\/\//.test(value.image_url)){
-            setErrors('Tiene que ser una URL valida')
-        }else {
-            setErrors('')
-        }
-    }
 
     function onInputChange(evento){
         setInput({
@@ -23,26 +28,53 @@ export default function Formulario (){
             [evento.target.name]: evento.target.value
         })
     }
-    function onInputChangeURL(evento){
-        setInput({
-            ...input,
-            [evento.target.name]: evento.target.value
-        })
-        validate({
-            ...errors,
-            [evento.target.name]: evento.target.value
-        })
+
+    function validate(){
+        const {name,life_span,image_url,temperament,weight_min,weight_max,height_min,height_max,breed_group} = input
+        let isValid= true
+        if(!life_span) isValid= false
+        if(life_span){
+            const split = life_span.split(['-'])
+            const num = split.map((e)=> e.trim())
+            console.log('1',num)
+            if(num.length <= 1){
+                console.log('2',num)
+                setErrors({
+                    ...errors, 
+                    name: "life_span",
+                    msg: 'Must have 2 numbers separate with one ( - )'
+                })
+                isValid= false
+            }
+            if(num[0]>num[1]){
+                setErrors({
+                    name: life_span,
+                    msg: 'first number must be less than the second'
+                })
+                isValid= false
+            }
+        }
+        if(isValid) setErrors({})
+        if(!name) isValid=false
+        if(!image_url)isValid=false
+        if(!temperament)isValid=false
+        if(!weight_min)isValid=false
+        if(!weight_max)isValid=false
+        if(!height_min)isValid=false
+        if(!height_max)isValid=false
+        if(!breed_group)isValid=false
+        return isValid
     }
 
     function buttonOnSubmit(e){
         e.preventDefault();
-        if(input.name && input.breed_group && input.weight_max && input.weight_min && input.height_max && input.height_min && input.temperament && input.image_url){
+        const isValid= validate()
+        if(isValid){
             dispatch(postDog(input))
-            setInput({})
+            setInput(obj)
             return alert('complete')
-        }
+        }else console.log(errors)
     }
-
     return <form onSubmit={buttonOnSubmit} >
         <label htmlFor='name'> name </label>
         <input 
@@ -101,7 +133,7 @@ export default function Formulario (){
         <label htmlFor='temperament'>temperament </label>
         <input 
         key='Temperament'
-        type='text'
+        list='temperaments'
         id='Temperament'
         name='temperament'
         onChange={onInputChange}
@@ -110,10 +142,10 @@ export default function Formulario (){
         <label htmlFor='image_url'> image URL </label>
         <input
         key='Image_url'
-        type='text'
+        type='url'
         id='Image_url'
         name='image_url'
-        onChange={onInputChangeURL}
+        onChange={onInputChange}
         value={input.image_url}
         />
         <label htmlFor='life_span'> life span  </label>
@@ -124,9 +156,14 @@ export default function Formulario (){
         name='life_span'
         onChange={onInputChange}
         value={input.life_span}
+        onBlur={validate}
         />
         <button type='submit'>CREATE</button>
-
+        <datalist id='temperaments'>
+            {temperaments.map((t)=>{
+                return <option key= {t.name} value= {t.name}/>
+            })}
+        </datalist>
 
     </form>
 }

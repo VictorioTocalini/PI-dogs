@@ -2,7 +2,9 @@ import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT, POST_DOG } from "../act
 
 var initialState = {
     dogs: [],
-    temperament: []
+    temperament: [],
+    dogByName: [],
+    dogById:[]
 };
 
 export default function reducer (state = initialState, action){
@@ -15,12 +17,12 @@ export default function reducer (state = initialState, action){
         case GET_BY_NAME: 
             return{
                 ...state,
-                dogs: [...action.payload]
+                dogByName: [...action.payload]
             }     
         case GET_BY_ID: 
             return{
                 ...state,
-                dogs: [...action.payload]
+                dogById: [...action.payload]
             }  
         case GET_TEMPERAMENT: 
             return{

@@ -16,7 +16,7 @@ export function getDogs(){
 }
 export function getByName(name){
     return function(dispatch){
-        fetch(LH +'/dogs/name='+ name)
+        fetch(LH +'/dogs/q?name='+ name)
         .then(r => r.json())
         .then(json => {
             dispatch({
@@ -26,9 +26,9 @@ export function getByName(name){
         })
     }
 }
-export function getById(ID){
+export function getById(id){
     return function(dispatch){
-        fetch(LH +'/dogs/'+ ID)
+        fetch(LH +'/dogs/'+ id)
         .then(r => r.json())
         .then(json => {
             dispatch({

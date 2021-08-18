@@ -3,24 +3,30 @@ const router = Router();
 const axios = require('axios')
 const {Dog} = require('../db');
 
-router.get('/dogs/:raza',async function(req,res,next){
+router.get('/dogs/:id',async function(req,res,next){
     try{
-        const raza = req.params.raza;
+        const raza = req.params.id;
         if(raza){
             const dog = await axios.get(`https://api.thedogapi.com/v1/breeds`);
             const dogg = dog.data;
             const dogs = await Dog.findAll();
             const rta =[]; 
-            dogg.filter(i => {
-                if(i.breed_group){
-                    let breed = i.breed_group.toLowerCase()
-                    if(breed.includes(raza)) rta.unshift(i)
-                }
+            dogg.map(i => {
+                if(i.id == raza) rta.push(i)
             });
-            dogs.forEach(e=> {
-                if(e.breed_group){
-                    let breed = e.breed_group.toLowerCase()
-                    if(breed.includes(raza)) rta.unshift(e)
+            dogs.map(i => {
+                if(i.id == raza) {
+                    const newDog = {
+                        image: {url:i.dataValues.image_url},
+                        name: i.dataValues.name,
+                        breed_group: i.dataValues.breed_group,
+                        height: {metric:i.dataValues.height_min + ' - ' + i.dataValues.height_max},
+                        weight: {metric: i.dataValues.weight_min + ' - ' + i.dataValues.weight_max},
+                        life_span: i.dataValues.life_span,
+                        temperament: i.dataValues.temperament,
+                        id: i.dataValues.id,
+                    }                  
+                    rta.push(newDog)
                 }
             });
             if(rta.length >0){

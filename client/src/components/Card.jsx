@@ -1,9 +1,20 @@
 import { Link } from "react-router-dom";
+import { getById } from '../actions';
+import { useDispatch} from 'react-redux';
+
 
 function Card ({dog}){
+    const dispatch = useDispatch();
+    
+    function idToState(){
+        dispatch(getById(dog.id))
+    }
     if(dog.image){
         return <div>
-        <Link  to={'/dogs/q?name='+ dog.name}>
+        <Link 
+        onClick={idToState} 
+        to={'/dogs/'+ dog.id}
+        >
             <h2>{dog.name}</h2>
         </Link>
             <img
@@ -14,7 +25,10 @@ function Card ({dog}){
         </div>
     }if(dog.image_url){
         return <div>
-        <Link  to={'/dogs/q?name='+ dog.name}>
+        <Link 
+        onClick={idToState} 
+        to={'/dogs/'+ dog.id}
+        >
             <h2>{dog.name}</h2>
         </Link>
             <img

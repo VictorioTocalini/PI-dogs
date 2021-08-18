@@ -19,17 +19,18 @@ router.get('/temperament',async function(_req,res,next){
                     let split = e.split([',']);
                     split.forEach((t)=>{
                         var tem = t.trim();
-                        if(!temperamentos.includes(tem)){
-                            temperamentos.push({name : tem})
-                        }
+                        temperamentos.push(tem)
                     })
                 }
             }); 
-            temperamentos.forEach( async(e)=> {
-                await Temperament.create({name:e.name})
+            let unic = temperamentos.filter((it,index)=> {
+                return temperamentos.indexOf(it) === index
+            })
+            unic.forEach( async(e)=> {
+                await Temperament.create({name:e})
             })   
             console.log('base de datos actualizada') 
-            res.send(temperamentos)
+            res.send(unic)
         }else res.send(db)
         }catch(err){
         next(err)   

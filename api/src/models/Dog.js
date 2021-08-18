@@ -33,13 +33,13 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     life_span: { 
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     },
     temperament: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    ID: {
+    id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true

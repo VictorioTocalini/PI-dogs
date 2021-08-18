@@ -23,7 +23,6 @@ router.post('/dog',async function(req,res,next){
         }else {
             const msg= 'Some data is missing!!'
             res.send(msg)
-            console.log(msg)
         }
     }catch(err){
         next(err)   

@@ -5,6 +5,7 @@ import Formulario from './components/form';
 import Cards from './components/Cards';
 import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT } from "./actions/constantes";
 import DogDetail from './components/DogDetail';
+// import Nav from './components/Nav'
 
 function App(props) {
   return (
@@ -12,10 +13,13 @@ function App(props) {
         <Route exact path='/'>
           <h1> pagina principal </h1>
         </Route>
-        <Route path= '/dogs'>
+        <Route path='/'>
+          {/* <Nav/> */}
+        </Route>
+        <Route exact path= '/dogs'>
           <Cards/>
         </Route>
-        <Route path= '/dogs/q?name='>
+        <Route path= '/dogs/:id'>
           <DogDetail />
         </Route>
         <Route exact path='/create'>
@@ -28,7 +32,9 @@ function App(props) {
 function mapStateToProps(state){
   return{
     dogs: state.dogs,
-    temperament: state.temperament
+    temperament: state.temperament,
+    dogByName: state.dogByName,
+    dogById: state.dogById
   }
 }
 
