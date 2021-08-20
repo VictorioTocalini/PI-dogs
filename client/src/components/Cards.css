@@ -1,0 +1,33 @@
+.button_search{
+    border:1px solid slategrey;
+    border-radius: 8px;
+    margin-inline: 5px;
+    height: 25px;
+}
+.searchbar{
+    border-radius: 8px;
+    border:1px solid slategrey;
+    margin-inline: 10px;
+    height: 25px;
+}
+label{
+    color: beige;
+}
+.cardbox{
+    margin-top: 10px;
+    display: inline-table;
+    background-color: #67676A
+}
+.title{
+    color: #A5AFAF;
+    font-size: 30px;
+    display: inline;
+    border: 2px solid;
+    border-radius: 15px;
+    background-color: beige;
+    margin-left: -300px;
+    margin-right: 150px;
+}
+.homeBox{
+    display: inline-block;
+}

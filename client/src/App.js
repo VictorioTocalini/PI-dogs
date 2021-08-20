@@ -5,16 +5,17 @@ import Formulario from './components/form';
 import Cards from './components/Cards';
 import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT } from "./actions/constantes";
 import DogDetail from './components/DogDetail';
-// import Nav from './components/Nav'
+import Welcome from './components/Welcome';
+import Nav from './components/Nav'
 
 function App(props) {
   return (
     <div className="App">
-        <Route exact path='/'>
-          <h1> pagina principal </h1>
-        </Route>
         <Route path='/'>
-          {/* <Nav/> */}
+          <Nav/>
+        </Route>
+        <Route exact path='/'>
+         <Welcome></Welcome>
         </Route>
         <Route exact path= '/dogs'>
           <Cards/>

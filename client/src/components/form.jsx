@@ -1,44 +1,57 @@
 import React,{useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { postDog, getTemperament } from '../actions';
+import './form.css'
 
 export default function Formulario (){
     const dispatch = useDispatch();
-    useEffect(()=>{
-        dispatch(getTemperament())
+    useEffect( ()=>{
+        async function f() { 
+            await dispatch(getTemperament())
+        } 
+        f()
     },[dispatch]);
-    const obj = {      
-        "name":"",
-        "breed_group":"",
-        "weight_min":"",
-        "weight_max":"",
-        "height_min":"",
-        "height_max":"",
-        "temperament":"",
-        "image_url":"",
-        "life_span":""
-    };
     const temperaments = useSelector((state) => state.temperament)
+    const[temperament, setTemperament] = React.useState([])
+    const obj = {  
+        name:"",
+        breed_group:"",
+        weight_min:"",
+        weight_max:"",
+        height_min:"",
+        height_max:"",
+        image_url:"",
+        life_span:""
+    };
     const[input, setInput] = React.useState(obj);
-    const[errors, setErrors] = React.useState({});
-
-    function onInputChange(evento){
-        setInput({
-            ...input,
-            [evento.target.name]: evento.target.value
-        })
+    const[errors, setErrors] = React.useState({
+        msg: 'All the camps must be fill'
+    });
+    
+    function onInputChange(e){
+        e.preventDefault()
+        if(e.target.name === "temperament"){
+            const value = e.target.value
+            setTemperament([...temperament, value])
+        }else {
+            setInput({
+                ...input,
+                [e.target.name]:e.target.value
+            })
+        }
     }
+    // function handleDelete(t){
+    //     setTemperament([...temperament.filter((temp) => temp !== t) ])
+    // }
 
     function validate(){
-        const {name,life_span,image_url,temperament,weight_min,weight_max,height_min,height_max,breed_group} = input
+        const {name,life_span,image_url,weight_min,weight_max,height_min,height_max,breed_group} = input
         let isValid= true
         if(!life_span) isValid= false
         if(life_span){
             const split = life_span.split(['-'])
             const num = split.map((e)=> e.trim())
-            console.log('1',num)
             if(num.length <= 1){
-                console.log('2',num)
                 setErrors({
                     ...errors, 
                     name: "life_span",
@@ -48,13 +61,13 @@ export default function Formulario (){
             }
             if(num[0]>num[1]){
                 setErrors({
-                    name: life_span,
+                    name: "life_span",
                     msg: 'first number must be less than the second'
                 })
                 isValid= false
             }
         }
-        if(isValid) setErrors({})
+        if(isValid) 
         if(!name) isValid=false
         if(!image_url)isValid=false
         if(!temperament)isValid=false
@@ -62,20 +75,38 @@ export default function Formulario (){
         if(!weight_max)isValid=false
         if(!height_min)isValid=false
         if(!height_max)isValid=false
+        if(weight_min>weight_max){
+            setErrors({
+                name: "weight",
+                msg: 'min weight must be less than maxim weight'
+            })
+            isValid= false
+        }
+        if(height_min>height_max){
+            setErrors({
+                name: "height",
+                msg: 'min height must be less than maxim height'
+            })
+            isValid= false
+        }
         if(!breed_group)isValid=false
         return isValid
     }
-
+    
     function buttonOnSubmit(e){
         e.preventDefault();
         const isValid= validate()
         if(isValid){
+            input.temperament = temperament
             dispatch(postDog(input))
             setInput(obj)
+            setTemperament([])
+            setErrors([])
             return alert('complete')
-        }else console.log(errors)
+        }
     }
-    return <form onSubmit={buttonOnSubmit} >
+    return <>
+    <form className='form' onSubmit={buttonOnSubmit} >
         <label htmlFor='name'> name </label>
         <input 
         key='Name'
@@ -131,14 +162,11 @@ export default function Formulario (){
         value={input.height_max}
         />
         <label htmlFor='temperament'>temperament </label>
-        <input 
-        key='Temperament'
-        list='temperaments'
-        id='Temperament'
-        name='temperament'
-        onChange={onInputChange}
-        value={input.temperament}
-        />
+        <select name='temperament' onChange={onInputChange}>
+            {temperaments && temperaments.map((temp) => (
+            <option key= {temp.name} value={temp.name}>{temp.name}</option>
+            ))}
+        </select>
         <label htmlFor='image_url'> image URL </label>
         <input
         key='Image_url'
@@ -158,14 +186,19 @@ export default function Formulario (){
         value={input.life_span}
         onBlur={validate}
         />
+        {errors.name&& (
+            <p className='error'>{errors.name}: {errors.msg}</p>
+        )}
         <button type='submit'>CREATE</button>
-        <datalist id='temperaments'>
-            {temperaments.map((t)=>{
-                return <option key= {t.name} value= {t.name}/>
+        </form>
+        { temperament && temperament.map((t)=>{
+            return (
+                <div className='temperaments'> 
+                <p key={t}>{t}</p>  
+                </div>
+            )
             })}
-        </datalist>
-
-    </form>
+    </>
 }
 
 // hacer varios validate para controlar los inputs, mirar el repaso de mati

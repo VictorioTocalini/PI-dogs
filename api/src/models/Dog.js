@@ -36,7 +36,7 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING
     },
     temperament: {
-      type: DataTypes.STRING,
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
     id: {
@@ -57,5 +57,5 @@ module.exports = (sequelize) => {
   "life_span": "3",
   "breed_group": "carlos",
   "image_url": "http://googlew",
-  "temperament":"socialbe, pelotudo"
+  "temperament":[socialbe, pelotudo]
 }*/

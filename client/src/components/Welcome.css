@@ -1,0 +1,9 @@
+
+.welcome{
+    color: #A5AFAF;
+    font-size: 150px;
+    display: inline;
+    border: 2px solid;
+    border-radius: 15px;
+    background-color: beige;
+}

@@ -1,0 +1,59 @@
+.dogImage{
+    width: 30%;
+    display: block;
+    position: relative;
+    margin-left: 10px;
+    border: 3px solid #A5AFAF
+}
+.dogName{
+    color: #A5AFAF;
+    font-size: 55px;
+    border: 2px solid;
+    border-radius: 15px;
+    background-color: #192734;
+}
+
+.centralBox{
+    font-family: serif;
+    display: inline-flex;
+    background-color: #192734;
+    padding: 25px;
+    border: 2px solid #A5AFAF
+}
+.ulData{
+    display: inline-block;
+}
+.data{
+    display: flow-root;
+    font-size: 30px;    
+    margin-inline: 150px;
+    margin-top: 40px;
+    color: #A5AFAF;
+}
+.UL{
+    display: inline-grid;
+    align-items: flex-end;
+}
+.LI{
+    display: table;
+    margin: 10px;
+    font-size: 25px;
+    color: #A5AFAF;
+    margin-top: -10px;
+}
+.LIs{
+    display: table;
+    margin: 10px;
+    font-size: 40px;
+    color: #A5AFAF;
+    margin-top: -30px;
+}
+body{
+    background-color: #56565A ;
+}
+.dataTitle{
+    display: flow-root;
+    font-size: 40px;    
+    margin-inline: 150px;
+    color: #A5AFAF;
+}

@@ -1,4 +1,4 @@
-import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT } from "./constantes";
+import { GET_DOGS,GET_BY_NAME,GET_BY_ID,GET_TEMPERAMENT,ALFABETIC,FILTER_BY_DB, DELETE_DOG } from "./constantes";
 
 const LH = 'http://localhost:3001';
 
@@ -62,4 +62,56 @@ export function postDog(input){
     }
 }
 
+export function alfabeticOrder (e){
+     return function(dispatch) {
+        fetch(LH + '/dogs')
+        .then(r => r.json())
+        .then(json => {
+            const order = [];
+            json.forEach((d)=>{
+                order.unshift(d)
+            })
+            dispatch({
+                type: ALFABETIC,
+                payload: order
+            })
+        })
+    }
+}
 
+export function databaseDogs (value){
+    return function(dispatch){
+        fetch(LH + '/dogs')
+        .then(r => r.json())
+        .then(json => {
+            if(value==='DB'){
+                const arr = json.filter((d)=>d.hasOwnProperty('createdAt'))
+                dispatch({
+                    type:FILTER_BY_DB,
+                    payload: arr
+                })
+            }if(value==='API'){
+                const arr = json.filter((d)=>d.hasOwnProperty("reference_image_id"))
+                dispatch({
+                    type:FILTER_BY_DB,
+                    payload: arr
+                })
+            }if(value==='ALL'){
+                dispatch({
+                    type:FILTER_BY_DB,
+                    payload: json
+                }) 
+            }  
+        })
+    }
+}
+export function deleteDog(value){
+    return function (dispatch){
+        fetch(LH + '/dogs')
+        .then(r => r.json())
+        .then(json => {
+            
+        })
+    }
+
+}

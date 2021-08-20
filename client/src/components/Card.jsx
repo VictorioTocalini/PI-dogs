@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { getById } from '../actions';
 import { useDispatch} from 'react-redux';
+import './Card.css'
 
 
 function Card ({dog}){
@@ -10,7 +11,7 @@ function Card ({dog}){
         dispatch(getById(dog.id))
     }
     if(dog.image){
-        return <div>
+        return <div className= 'dogCard'>
         <Link 
         onClick={idToState} 
         to={'/dogs/'+ dog.id}
@@ -18,21 +19,22 @@ function Card ({dog}){
             <h2>{dog.name}</h2>
         </Link>
             <img
-             width='10%' 
+             className='image'
              src={dog.image.url} 
              alt='agregame una foto :D'
              />
         </div>
     }if(dog.image_url){
-        return <div>
+        return <div className= 'dogCard'>
         <Link 
+        className= 'link'
         onClick={idToState} 
         to={'/dogs/'+ dog.id}
         >
             <h2>{dog.name}</h2>
         </Link>
             <img
-             width='10%' 
+             className='image' 
              src={dog.image_url} 
              alt='agregame una foto :D'
              />

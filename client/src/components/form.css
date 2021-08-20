@@ -1,0 +1,10 @@
+.form{
+    display: inline-grid;
+    justify-items: center;
+}
+.error{
+    color: #C0392B
+}
+.temperaments{
+    color: beige
+}
